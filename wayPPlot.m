@@ -1,6 +1,6 @@
 clear all;
 syms t;
-T = 2;
+
 load('way_point.mat')
 
 

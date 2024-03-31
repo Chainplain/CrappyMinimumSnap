@@ -57,7 +57,7 @@ mu_psi = 1;
 
 
 global T;
-T = 2;
+T = 4;
 
 
 global dsigma_x;
@@ -85,7 +85,7 @@ d4sigma_y(t) = diff(sigma_y,t,4);
 d4sigma_z(t) = diff(sigma_z,t,4);
 % d4sigma_psi(t) = diff(sigma_psi,t,4);
 
-m_p = 0.1;
+m_p = 0.05;
 
 sumSquare(t) = mu_p * d4sigma_x(t) ^ 2 + m_p * dsigma_x ^ 2 + ...
                mu_p * d4sigma_y(t) ^ 2 + m_p * dsigma_y ^ 2 +...
@@ -247,9 +247,9 @@ ceq(44) = double(subs(acc_y1, t, T)) - double(subs(acc_y2, t, 0));
 ceq(45) = double(subs(acc_z1, t, T)) - double(subs(acc_z2, t, 0));
 
 %% heading changing rate constraint
-% sample_num = 10;
+% sample_num = 20;
 % time_sample = 0: T/sample_num : T;
-% vel_psi_max = pi;
+% vel_psi_max = 3 * pi;
 % 
 % vel_psi_on_traj = double(subs(vel_psi, t, time_sample));
 % vel_psi_on_traj1 = double(subs(vel_psi1, t, time_sample));

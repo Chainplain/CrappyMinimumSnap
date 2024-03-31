@@ -1,7 +1,7 @@
 clear all;
 syms t;
 % T = 2;
-load('ball_obstraction.mat')
+load('ball_obstraction_hcr_pi.mat')
 
 
 
@@ -19,7 +19,7 @@ vel_z_res = diff(pos_z_res,t,1);
 pos_psi_res(t) = atan2(vel_y_res(t),vel_x_res(t));
 vel_psi_res(t) = diff(pos_psi_res,t,1);
 
-time_secs = 0 : 0.01 : T;
+time_secs = 0.01 : 0.01 : T;
 x_pos = double(pos_x_res(time_secs));
 y_pos = double(pos_y_res(time_secs));
 z_pos = double(pos_z_res(time_secs));

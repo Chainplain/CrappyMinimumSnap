@@ -43,7 +43,7 @@ sigma_z = poly2sym(cz, t);
 
 mu_p = 1;
 mu_psi = 1;
-mu_2 = 0;
+mu_2 = 1;
 
 global T;
 T = 3;
@@ -102,7 +102,7 @@ global dsigma_psi;
 dsigma_x = diff(sigma_x,t,1);
 dsigma_y = diff(sigma_y,t,1);
 dsigma_z = diff(sigma_z,t,1);
-sigma_psi = atan2( dsigma_y, dsigma_x);
+sigma_psi = atan2(dsigma_y,dsigma_x );
 dsigma_psi = diff(sigma_psi,t,1);
 
 d4sigma_x(t) = diff(sigma_x,t,4);
@@ -110,9 +110,12 @@ d4sigma_y(t) = diff(sigma_y,t,4);
 d4sigma_z(t) = diff(sigma_z,t,4);
 % d4sigma_psi(t) = diff(sigma_psi,t,4);
 
+psi_rat_cons = (0.5 * pi)^2 - dsigma_psi^2;
+% rec_psi_rat_cons = (1 + sign(psi_rat_cons)) * psi_rat_cons;
+
 sumSquare(t) = mu_p * d4sigma_x(t) ^ 2 + mu_2 * dsigma_x ^ 2 +...
                mu_p * d4sigma_y(t) ^ 2 + mu_2 * dsigma_y ^ 2 +...
-               mu_p * d4sigma_z(t) ^ 2 + mu_2 * dsigma_z ^ 2;
+               mu_p * d4sigma_z(t) ^ 2 + mu_2 * dsigma_z ^ 2 + psi_rat_cons ;
 %                mu_psi * d4sigma_psi(t) ^ 2;
 
 global intSumSquare;
@@ -229,17 +232,14 @@ velH(velH < 0) = 0;
 ceq(15) = sum(velH);
 
 %% heading changing rate constraint
-sample_num = 5;
-time_sample = T/sample_num: T/sample_num : T-T/sample_num;
-vel_psi_max = 0.2 * pi;
-
-vel_psi_on_traj = double(subs(vel_psi, t, time_sample));
-r = (vel_psi_on_traj).^2 - vel_psi_max^2;
-r(r < 0) = 0;
-ceq(16) = sum(r(1));
-ceq(17) = sum(r(2));
-ceq(18) = sum(r(3));
-ceq(19) = sum(r(4));
+% sample_num = 20;
+% time_sample = T/sample_num: T/sample_num : T-T/sample_num;
+% vel_psi_max = 0.5 * pi;
+% 
+% vel_psi_on_traj = double(subs(vel_psi, t, time_sample));
+% r = abs(vel_psi_on_traj) - vel_psi_max;
+% r(r < 0) = 0;
+% ceq(16) = sum(r);
 end
 
 
